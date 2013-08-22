@@ -29,7 +29,7 @@ app.get('/search/:term', function (req, res) {
                     }
                 });
         } else {
-            res.end(404, 'No article found');
+            res.end(400, 'No search term');
         }
     });
 });
