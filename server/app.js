@@ -9,6 +9,14 @@ app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 
+['angularjs','backbonejs', 'knockoutjs'].forEach(function(framework){
+//    app.get('/' + framework, function(req,res){
+//        res.redirect('/' + framework + '/');
+//    });
+    app.use('/' + framework, express.static(__dirname + '/../' + framework + '/app'));
+});
+
+
 app.get('/search/:term', function (req, res) {
     var term =req.params.term;
     wikiSearch.search(term, function(err, articleName){
