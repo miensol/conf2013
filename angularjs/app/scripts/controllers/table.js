@@ -1,0 +1,31 @@
+(function(){
+    var confApp = angular.module('confApp');
+
+    confApp.controller('TableController', function($scope, countryData){
+
+        $scope.countries = countryData.loadCountries();
+
+        $scope.filterText = "";
+        $scope.applyFiltering = function(){
+            $scope.countries = countryData.loadCountries().filter(function(country){
+                return country.matchesText($scope.filterText);
+            });
+        }.throttle(100);
+
+        $scope.classForCountry = function(country){
+            if(country.isSelected){
+                return "country-selected";
+            }
+            if(country.isHighlighted){
+                return "country-highlighted";
+            }
+            return "";
+        };
+
+        $scope.selectCountry = function(country){
+            countryData.selectCountry(country);
+            $scope.selectedCountry = country;
+        };
+
+    });
+}());

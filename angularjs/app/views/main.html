@@ -1,7 +1,49 @@
 <div class="row">
-    <div class="col-md-8">Map</div>
-    <div class="col-md-4">Countries</div>
+    <div class="col-md-12 map-container" ng-controller="MapController">
+        <div class="map" raphael-map="countryList"></div>
+    </div>
 </div>
 <div class="row">
-    <div class="col-md-12">Table</div>
+    <div class="table-container" ng-controller="TableController">
+        <div class="col-sm-6 col-xs-6">
+            <table class="table countries-table">
+                <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>
+                        Name
+                        <input type="text"
+                               name="filterName" placeholder="filter"
+                               ng-model="filterText"
+                               ng-change="applyFiltering()"
+                                >
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="country in countries"
+                    ng-mouseenter="country.startHighlighting()"
+                    ng-mouseleave="country.stopHighlighting()"
+                    class="country"
+                    ng-class="classForCountry(country)"
+                    ng-click="selectCountry(country)">
+                    <td>{{country.code}}</td>
+                    <td>{{country.name}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-6 col-xs-6 country-description-container">
+            <div class="row country-description">
+                <p>
+                    <span>Name:</span><strong>Country Name</strong>
+                </p>
+                <p class="country-shape" raphael-shape="selectedCountry">
+                </p>
+                <p>
+                    <a href="#">Read more...</a>
+                </p>
+            </div>
+        </div>
+    </div>
 </div>

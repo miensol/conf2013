@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('confApp', [])
+angular.module('confApp', ['ngResource'])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
