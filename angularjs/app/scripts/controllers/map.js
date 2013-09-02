@@ -9,12 +9,14 @@
             $scope.$watch(shapeAttrName, function(newShape){
                 paper.clear();
                 if(newShape){
-                    paper.path(newShape.svgPath)
-                        .attr({
-                            stroke: "#ccc6ae",
-                            fill: newShape.color,
-                            'stroke-opacity': 0.9
-                        });
+                    var shapePath = paper.path(newShape.svgPath);
+                    var bb = shapePath.getBBox();
+                    shapePath.attr({
+                        stroke: "#ccc6ae",
+                        fill: newShape.color,
+                        'stroke-opacity': 0.9
+                    });
+                    paper.setViewBox(bb.x, bb.y, bb.width, bb.height, true);
                 }
             });
         };
@@ -43,10 +45,9 @@
                 applySizeForAutoScale();
                 paper.setStart();
                 shapes.forEach(function (shape) {
-                    var countryCode = shape.code;
                     var mapCountryScope = $scope.$new();
                     mapCountryScope.shape = shape;
-                    var countryPath = paper.path(worldmap.shapes[countryCode])
+                    var countryPath = paper.path(shape.svgPath)
                         .attr({
                             stroke: shape.stroke.color,
                             fill: shape.color,

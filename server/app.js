@@ -60,12 +60,14 @@ app.get('/search/:term', function(req, res) {
 
 app.get('/country', function(req,res){
      var countryList = Object.keys(worldMap.names).map(function(code){
-        return {
-            code: code,
-            name: worldMap.names[code],
-            svgPath: worldMap.shapes[code],
-            value: 1 + Math.floor(Math.random() * 100)
-        };
+         var country = {
+             code: code,
+             name: worldMap.names[code],
+             svgPath: worldMap.shapes[code],
+             value: 1 + Math.floor(Math.random() * 100)
+         };
+         country.valueFormatted = country.value + '%';
+         return  country;
      });
     res.json(countryList);
 });

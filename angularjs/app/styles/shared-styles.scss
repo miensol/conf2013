@@ -1,12 +1,10 @@
 @import "bootstrap-sass/lib/_variables.scss";
 @import "bootstrap-sass/lib/_mixins.scss";
 
-
 .map-container {
   height: 340px;
   outline: 1px solid blue;
 }
-
 
 .map {
   background: $gray-lighter;
@@ -24,7 +22,6 @@ svg {
 
 .countries-table {
   height: 250px;
-  width: 285px;
 
   thead {
     display: block;
@@ -41,7 +38,6 @@ svg {
     background-color: rgba(255, 136, 0, 0.5);
   }
 
-
   .country-selected {
     background-color: rgba(255, 136, 0, 0.9);
     font-weight: bold;
@@ -51,13 +47,49 @@ svg {
     @include transition(background-color .5s ease-in-out);
   }
 
+
+  .country-name {
+    min-width: 220px;
+  }
+
+  @media (min-width: $screen-sm) {
+    .country-name {
+      min-width: 320px;
+    }
+  }
+
+  @media (min-width: $screen-desktop) {
+    .country-name {
+      min-width: 380px;
+    }
+  }
+
 }
 
+
+
+
+
 .country-description {
+  position: relative;
+
   .country-shape {
     height: 200px;
     border-radius: 10px;
     background-color: $gray-lighter;
+  }
+  .country-value {
+    z-index: 1;
+    border-radius: 10px;
+    background-color: rgba($brand-info,.5);
+    color: #ffffff;
+    font-size: 30px;
+    text-align: center;
+    left: 50px;
+    right: 50px;
+    top: 115px;
+    line-height: 40px;
+    position: absolute;
   }
 }
 

@@ -20,7 +20,7 @@
                 this.isHighlighted = false;
                 this.stroke =  this.getStrokeBasedOnSelected({ color: "#ccc6ae", width: 1 });
             };
-            this.matchesText = function(text){
+            this.matchesFilter = function(text){
                 if(!text){
                     return true;
                 }

@@ -28,7 +28,7 @@
                     ng-class="classForCountry(country)"
                     ng-click="selectCountry(country)">
                     <td>{{country.code}}</td>
-                    <td>{{country.name}}</td>
+                    <td><div class="country-name">{{country.name}}</div></td>
                 </tr>
                 </tbody>
             </table>
@@ -36,10 +36,11 @@
         <div class="col-sm-6 col-xs-6 country-description-container">
             <div class="row country-description">
                 <p>
-                    <span>Name:</span><strong>Country Name</strong>
+                    <span>Name:</span><strong>{{selectedCountry.name}}</strong>
                 </p>
                 <p class="country-shape" raphael-shape="selectedCountry">
                 </p>
+                <div class="country-value">{{selectedCountry.valueFormatted}}</div>
                 <p>
                     <a href="#">Read more...</a>
                 </p>

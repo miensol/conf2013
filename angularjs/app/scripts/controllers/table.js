@@ -8,7 +8,7 @@
         $scope.filterText = "";
         $scope.applyFiltering = function(){
             $scope.countries = countryData.loadCountries().filter(function(country){
-                return country.matchesText($scope.filterText);
+                return country.matchesFilter($scope.filterText);
             });
         }.throttle(100);
 
