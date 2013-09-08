@@ -6,6 +6,28 @@ var wikiSearch = require('./wiki-search.js');
 var worldMap = require('./world.js');
 var app = express();
 
+
+var countryList = function () {
+    var result = Object.keys(worldMap.names).map(function (code) {
+        var country = {
+            code: code,
+            name: worldMap.names[code],
+            svgPath: worldMap.shapes[code],
+            value: 1 + Math.floor(Math.random() * 100)
+        };
+        country.valueFormatted = country.value + '%';
+        return  country;
+    });
+    return result;
+};
+
+
+var findCountryByCode = function (code) {
+    return countryList().filter(function (country) {
+        return country.code === code;
+    })[0];
+};
+
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(app.router);
@@ -32,8 +54,9 @@ app.get('/world.js', function(req, res){
     res.sendfile(__dirname + '/world.js');
 });
 
-app.get('/search/:term', function(req, res) {
-    var term = req.params.term;
+app.get('/country/:code', function(req, res) {
+    var country = findCountryByCode(req.params.code);
+    var term = country.name;
     wikiSearch.search(term, function(err, articleName) {
         var article = '';
         if (articleName) {
@@ -44,32 +67,28 @@ app.get('/search/:term', function(req, res) {
                 },
                 function(err, htmlWikiText) {
                     if (err) {
-                        res.end(404, 'No article found');
+                        country.article = 'No article found';
                     } else {
-                        res.send({
-                            article: htmlWikiText
-                        });
+                        country.article = htmlWikiText;
                     }
+                    res.json(country);
                 });
         } else {
-            console.error('article not found:', articleName);
-            res.end(404);
+            country.article = 'No article found';
+            res.json(country);
         }
     });
 });
 
 app.get('/country', function(req,res){
-     var countryList = Object.keys(worldMap.names).map(function(code){
-         var country = {
-             code: code,
-             name: worldMap.names[code],
-             svgPath: worldMap.shapes[code],
-             value: 1 + Math.floor(Math.random() * 100)
-         };
-         country.valueFormatted = country.value + '%';
-         return  country;
-     });
-    res.json(countryList);
+    var countries = countryList();
+    res.json(countries);
+});
+
+app.get('/country/:code', function(req, res){
+    var code = req.params.code;
+    var country =  findCountryByCode(code);
+
 });
 
 module.exports = app;

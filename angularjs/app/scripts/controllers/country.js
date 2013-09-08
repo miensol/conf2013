@@ -2,26 +2,26 @@
     var confApp = angular.module('confApp');
 
     confApp.factory('countryData', function ($resource) {
-        var CountryViewModel = function(){
+        var CountryViewModel = function () {
             var relative = ((this.value - 1) / 100.0 * 225).toFixed(0);
             var notSelectedStroke = { color: "#ccc6ae", width: 1 };
             var selectedStroke = { color: "#ff4400", width: 5 };
 
-            this.getStrokeBasedOnSelected = function(other){
+            this.getStrokeBasedOnSelected = function (other) {
                 return this.isSelected ? selectedStroke : other;
             };
-            this.color = 'rgb('+relative+','+relative+','+255+')';
+            this.color = 'rgb(' + relative + ',' + relative + ',' + 255 + ')';
 
-            this.startHighlighting = function(){
+            this.startHighlighting = function () {
                 this.isHighlighted = true;
-                this.stroke =  this.getStrokeBasedOnSelected({ color: "#ff8800", width: 4 });
+                this.stroke = this.getStrokeBasedOnSelected({ color: "#ff8800", width: 4 });
             };
-            this.stopHighlighting = function(){
+            this.stopHighlighting = function () {
                 this.isHighlighted = false;
-                this.stroke =  this.getStrokeBasedOnSelected({ color: "#ccc6ae", width: 1 });
+                this.stroke = this.getStrokeBasedOnSelected({ color: "#ccc6ae", width: 1 });
             };
-            this.matchesFilter = function(text){
-                if(!text){
+            this.matchesFilter = function (text) {
+                if (!text) {
                     return true;
                 }
                 text = text.toLowerCase();
@@ -29,43 +29,63 @@
                     || this.code.toLowerCase().indexOf(text) !== -1;
             };
 
-            this.select = function(){
+            this.select = function () {
                 this.isSelected = true;
                 this.stroke = this.getStrokeBasedOnSelected(notSelectedStroke);
             };
-            this.unselect = function(){
+            this.unselect = function () {
                 this.isSelected = false;
                 this.stroke = this.getStrokeBasedOnSelected(notSelectedStroke);
+            };
+
+            this.hasCodeEqualTo = function(code){
+                return this.code === code;
             };
 
             this.stopHighlighting();
             this.unselect();
         };
-        var countryResource = $resource('/country');
+        var countryResource = $resource('/country/:code');
         return {
             countries: null,
             loadCountries: function (callback) {
+                callback = callback || function () {
+                };
                 if (!this.countries) {
                     this.countries = countryResource.query(function (elements) {
-                        elements.forEach(function(country){
+                        elements.forEach(function (country) {
                             CountryViewModel.call(country);
                         });
-                        if(callback){
-                            callback(elements);
-                        }
+                        callback(elements);
                     });
                 }
-
+                callback(this.countries);
                 return this.countries;
             },
-            selectCountry: function(countryToSelect){
-                if(countryToSelect.isSelected){
+            loadFullCountry: function(countryCode){
+                var result = new $.Deferred();
+                countryResource.get({code: countryCode}, function(country){
+                    result.resolve(country);
+                });
+                return result;
+            },
+            selectCountry: function (countryToSelect) {
+                if (countryToSelect.isSelected) {
                     return;
                 }
-                this.countries.forEach(function(country){
+                this.countries.forEach(function (country) {
                     country.unselect();
                 });
                 countryToSelect.select();
+            },
+            onCountryWithCodeDo: function (code, countryCallback) {
+                this.loadCountries(function(countries){
+                    countries.forEach(function(country){
+                        if(country.hasCodeEqualTo(code)){
+                            countryCallback(country);
+                        }
+                    });
+                });
             }
         };
     });

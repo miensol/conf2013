@@ -22,13 +22,13 @@
         };
     });
 
-    confApp.directive('raphaelMap', function () {
+    confApp.directive('raphaelMap', function ($parse) {
         return function ($scope, $element, $attrs) {
             var dom = $element[0];
             var constWidth = 1000;
             var constHeight = 400;
             var paper = Raphael(dom, constWidth, constHeight);
-
+            var clickHandler = $parse($attrs.raphaelClick)($scope);
             function applySizeForAutoScale() {
                 $element.css({
                     width: constWidth,
@@ -67,6 +67,10 @@
                         mapCountryScope.$apply();
                     }, function () {
                         shape.stopHighlighting();
+                        mapCountryScope.$apply();
+                    }).click(function(event){
+                        event.stopPropagation();
+                        clickHandler(shape);
                         mapCountryScope.$apply();
                     });
                 });
