@@ -1,6 +1,8 @@
 (function () {
     var confApp = angular.module('confApp');
 
+    var emptyFunction = function () {};
+
     confApp.factory('countryData', function ($resource) {
         var CountryViewModel = function () {
             var relative = ((this.value - 1) / 100.0 * 225).toFixed(0);
@@ -20,13 +22,18 @@
                 this.isHighlighted = false;
                 this.stroke = this.getStrokeBasedOnSelected({ color: "#ccc6ae", width: 1 });
             };
+            this.nameMatchesText = function (text) {
+                return this.name.toLowerCase().indexOf(text) !== -1;
+            };
+            this.codeMatchesText = function (text) {
+                return this.code.toLowerCase().indexOf(text) !== -1;
+            };
             this.matchesFilter = function (text) {
                 if (!text) {
                     return true;
                 }
                 text = text.toLowerCase();
-                return this.name.toLowerCase().indexOf(text) !== -1
-                    || this.code.toLowerCase().indexOf(text) !== -1;
+                return this.nameMatchesText(text) || this.codeMatchesText(text);
             };
 
             this.select = function () {
@@ -48,18 +55,20 @@
         var countryResource = $resource('/country/:code');
         return {
             countries: null,
-            loadCountries: function (callback) {
-                callback = callback || function () {
-                };
-                if (!this.countries) {
-                    this.countries = countryResource.query(function (elements) {
-                        elements.forEach(function (country) {
-                            CountryViewModel.call(country);
-                        });
-                        callback(elements);
+            fetchCountries: function (callback) {
+                this.countries = countryResource.query(function (elements) {
+                    elements.forEach(function (country) {
+                        CountryViewModel.call(country);
                     });
+                    callback(elements);
+                });
+            }, loadCountries: function (callback) {
+                callback = callback || emptyFunction;
+                if (!this.countries) {
+                    this.fetchCountries(callback);
+                } else {
+                    callback(this.countries);
                 }
-                callback(this.countries);
                 return this.countries;
             },
             loadFullCountry: function(countryCode){

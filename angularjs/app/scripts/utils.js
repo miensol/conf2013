@@ -13,13 +13,18 @@
         threshhold || (threshhold = 250);
         var last,
             deferTimer,
-            fn = this;
+            fn = this,
+            hasThresholdNotExpired = function(){
+                if(last){
+                    return new Date() < last + threshhold;
+                }
+                return false;
+            };
         return function () {
             var context = scope || this;
-
-            var now = +new Date,
+            var now = new Date(),
                 args = arguments;
-            if (last && now < last + threshhold) {
+            if (hasThresholdNotExpired()) {
                 // hold on to it
                 clearTimeout(deferTimer);
                 deferTimer = setTimeout(function () {
