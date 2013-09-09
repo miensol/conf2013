@@ -1,5 +1,11 @@
-define('confApp', ['backbone', 'confApp.index','confApp.more', 'confApp.country'], function(Backbone, index, more, countryData){
+define('confApp', [
+    'backbone',
+    'confApp.index',
+    'confApp.more',
+    'confApp.country'], function(Backbone, index, more, country){
     var currentView = null;
+
+    var countryData = country.countryData;
 
     var ConfAppRouter = Backbone.Router.extend({
         routes: {
@@ -9,7 +15,7 @@ define('confApp', ['backbone', 'confApp.index','confApp.more', 'confApp.country'
         },
 
         'default': function(countryCode){
-            if(countryData.isCountrySelected(countryCode)){
+            if(currentView instanceof index.MainView && countryData.isCountrySelected(countryCode)){
                 return;
             }
             if(currentView){
@@ -29,14 +35,12 @@ define('confApp', ['backbone', 'confApp.index','confApp.more', 'confApp.country'
         },
 
         'more': function(countryCode){
-            console.log('viewing more', currentView);
             if(currentView){
-                console.log('destroying previous view');
                 currentView.remove();
             }
             currentView = new more.MoreView({
                 el: this.newContainerChild(),
-                selectedCountryCode: countryCode
+                model: new country.Country({code: countryCode})
             }).render();
         }
 

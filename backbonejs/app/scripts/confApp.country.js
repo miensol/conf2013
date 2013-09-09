@@ -1,5 +1,6 @@
 define('confApp.country', ['backbone'], function (Backbone) {
     var Country = Backbone.Model.extend({
+        urlRoot: '/country',
         notSelectedStroke: { color: "#ccc6ae", width: 1 },
         selectedStroke: { color: "#ff4400", width: 5 },
         idAttribute: 'code',
@@ -88,5 +89,8 @@ define('confApp.country', ['backbone'], function (Backbone) {
         }
     });
 
-    return new CountryData();
+    return {
+        countryData: new CountryData(),
+        Country: Country
+    };
 });
