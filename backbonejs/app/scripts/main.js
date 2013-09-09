@@ -16,18 +16,35 @@ require.config({
         bootstrap: {
             deps: ['jquery'],
             exports: 'jquery'
+        },
+        confApp: {
+            deps: ['backbone'],
+            exports: 'confApp'
         }
     },
     paths: {
         jquery: '../bower_components/jquery/jquery',
         backbone: '../bower_components/backbone/backbone',
         underscore: '../bower_components/underscore/underscore',
-        bootstrap: 'vendor/bootstrap'
+        bootstrap: 'vendor/bootstrap',
+        text : "../bower_components/requirejs-text/text",
+        hbs : "../bower_components/require-handlebars-plugin/hbs",
+        i18nprecompile: "../bower_components/require-handlebars-plugin/hbs/i18nprecompile",
+        json2 : "../bower_components/require-handlebars-plugin/hbs/json2",
+        handlebars : "../bower_components/require-handlebars-plugin/Handlebars",
+        raphael: "../bower_components/raphael/raphael"
+    },
+    hbs: {
+        disableI18n: true,
+        templateExtension: "html"
     }
 });
 
 require([
-    'backbone'
-], function (Backbone) {
+    'backbone', 'confApp'
+], function (Backbone, confApp) {
+
+    confApp.router = new confApp.Router();
+
     Backbone.history.start();
 });
