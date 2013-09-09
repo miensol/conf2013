@@ -1,0 +1,35 @@
+<div>
+    <div class="row">
+        <div class="col-md-12 map-container" ng-controller="MapController">
+            <div class="map" raphael-map="countryList" raphael-click="selectCountry"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="table-container" ng-controller="TableController">
+            <div class="col-sm-6 col-xs-6">
+                <table class="table countries-table">
+                    <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>
+                            Name
+                            <input type="text"
+                                   name="filterName" placeholder="filter"
+                                   ng-model="filterText"
+                                   ng-change="applyFiltering()"
+                                    >
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-6 col-xs-6 country-description-container">
+                <div class="row country-description">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
