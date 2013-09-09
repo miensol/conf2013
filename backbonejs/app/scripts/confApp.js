@@ -34,9 +34,10 @@ define('confApp', ['backbone', 'confApp.index','confApp.more', 'confApp.country'
                 console.log('destroying previous view');
                 currentView.remove();
             }
-            currentView = new index.MainView({
-                el: this.newContainerChild()
-            });
+            currentView = new more.MoreView({
+                el: this.newContainerChild(),
+                selectedCountryCode: countryCode
+            }).render();
         }
 
     });

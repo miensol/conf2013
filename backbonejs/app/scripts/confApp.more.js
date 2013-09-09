@@ -1,8 +1,9 @@
-define('confApp.more', ['backbone'], function(Backbone){
+define('confApp.more', ['backbone', 'confApp.country'], function(Backbone, countryData){
 
-    var MoreView = Backbone.View.extend(function(){
+    var MoreView = Backbone.View.extend({
+        render:function(){
 
-
+        }
     });
 
 

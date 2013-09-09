@@ -2,7 +2,7 @@ define('confApp.country', ['backbone'], function (Backbone) {
     var Country = Backbone.Model.extend({
         notSelectedStroke: { color: "#ccc6ae", width: 1 },
         selectedStroke: { color: "#ff4400", width: 5 },
-
+        idAttribute: 'code',
 
         initialize: function () {
             var relative = ((this.get('value') - 1) / 100.0 * 225).toFixed(0);
@@ -55,14 +55,14 @@ define('confApp.country', ['backbone'], function (Backbone) {
         model: Country,
         url: '/country',
 
-        initialize:function(){
+        initialize: function () {
 
         },
 
-        isCountrySelected: function(countryCode){
+        isCountrySelected: function (countryCode) {
             var result = false;
-            this.forEach(function(country){
-                if(country.get('isSelected') && country.hasCodeEqualTo(countryCode)){
+            this.forEach(function (country) {
+                if (country.get('isSelected') && country.hasCodeEqualTo(countryCode)) {
                     result = true;
                 }
             }, this);
@@ -79,10 +79,10 @@ define('confApp.country', ['backbone'], function (Backbone) {
             countryToSelect.select();
             this.trigger('selectedCountryChanged', countryToSelect);
         },
-        selectCountryByCode: function(countryCode){
-            this.forEach(function(country){
-                if(country.hasCodeEqualTo(countryCode)){
-                   this.selectCountry(country);
+        selectCountryByCode: function (countryCode) {
+            this.forEach(function (country) {
+                if (country.hasCodeEqualTo(countryCode)) {
+                    this.selectCountry(country);
                 }
             }, this);
         }
