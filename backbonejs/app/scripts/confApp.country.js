@@ -59,6 +59,16 @@ define('confApp.country', ['backbone'], function (Backbone) {
 
         },
 
+        isCountrySelected: function(countryCode){
+            var result = false;
+            this.forEach(function(country){
+                if(country.get('isSelected') && country.hasCodeEqualTo(countryCode)){
+                    result = true;
+                }
+            }, this);
+            return result;
+        },
+
         selectCountry: function (countryToSelect) {
             if (countryToSelect.get('isSelected')) {
                 return;
@@ -68,6 +78,13 @@ define('confApp.country', ['backbone'], function (Backbone) {
             });
             countryToSelect.select();
             this.trigger('selectedCountryChanged', countryToSelect);
+        },
+        selectCountryByCode: function(countryCode){
+            this.forEach(function(country){
+                if(country.hasCodeEqualTo(countryCode)){
+                   this.selectCountry(country);
+                }
+            }, this);
         }
     });
 

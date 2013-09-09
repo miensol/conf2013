@@ -44,7 +44,7 @@ require([
     'backbone', 'confApp'
 ], function (Backbone, confApp) {
 
-    new confApp.Router();
+    confApp.router = new confApp.Router();
 
     Backbone.history.start();
 });

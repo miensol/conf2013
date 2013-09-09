@@ -1,4 +1,8 @@
-define('confApp.index', ['backbone', 'hbs!../views/main', 'raphael', 'handlebars', 'confApp.country'], function (Backbone, mainHtml, Raphael, Handlebars, countryData) {
+define('confApp.index', ['backbone',
+    'hbs!../views/main',
+    'raphael',
+    'handlebars',
+    'confApp.country'], function (Backbone, mainHtml, Raphael, Handlebars, countryData) {
 
     var MapView = Backbone.View.extend({
         constWidth: 1000,
@@ -102,6 +106,7 @@ define('confApp.index', ['backbone', 'hbs!../views/main', 'raphael', 'handlebars
                         .bind({
                             click: function () {
                                 that.model.selectCountry(item);
+                                that.options.router.navigate(item.get('code'), {trigger: true});
                             },
                             mouseenter: item.startHighlighting.bind(item),
                             mouseleave: item.stopHighlighting.bind(item)
@@ -109,6 +114,7 @@ define('confApp.index', ['backbone', 'hbs!../views/main', 'raphael', 'handlebars
                     item.bind('change:isSelected change:isHighlighted', function () {
                         $row.attr('class', this.getClassForCountry(item));
                     }, this);
+                    $row.attr('class', this.getClassForCountry(item));
                     $body.append($row);
                 }, this);
 
@@ -129,17 +135,27 @@ define('confApp.index', ['backbone', 'hbs!../views/main', 'raphael', 'handlebars
     <a ng-href="#/{{selectedCountry.code}}/more">Read more...</a>\
 </p>'),
 
-        initialize: function(){
-            this.model.bind('selectedCountryChanged', function(country){
+        events: {
+            'click a': function (event) {
+                if(this.selectedCountry){
+                    this.options.router.navigate(this.selectedCountry.get('code') + '/more', {trigger: true});
+                }
+            }
+        },
+
+        initialize: function () {
+            this.selectedCountry = null;
+            this.model.bind('selectedCountryChanged', function (country) {
+                this.selectedCountry = country;
                 this.render(country.toJSON());
             }, this);
         },
 
-        render: function(countryJson){
+        render: function (countryJson) {
             this.$el.empty().html(this.tmpl({selectedCountry: countryJson}));
-            if(countryJson){
+            if (countryJson) {
                 var svgContainer = this.$el.find('.country-shape');
-                var paper =  Raphael(svgContainer[0]);
+                var paper = Raphael(svgContainer[0]);
                 var shapePath = paper.path(countryJson.svgPath);
                 var bb = shapePath.getBBox();
                 shapePath.attr({
@@ -157,26 +173,37 @@ define('confApp.index', ['backbone', 'hbs!../views/main', 'raphael', 'handlebars
 
     var MainView = Backbone.View.extend({
         initialize: function () {
+            countryData.once('reset', this.selectCountryByCodeInOptions, this)
             countryData.fetch({
                 reset: true
             });
         },
+        selectCountryByCodeInOptions: function(){
+            var countryCode = this.options.selectedCountryCode;
+            if(countryCode){
+                countryData.selectCountryByCode(countryCode);
+            }
+        },
         render: function () {
+            var that = this;
             this.$el.append(mainHtml({}));
             new MapView({
                 model: countryData,
                 el: this.$el.find('.map'),
                 clickHandler: function (country) {
                     countryData.selectCountry(country);
+                    that.options.router.navigate(country.get('code'), {trigger: true});
                 }
             }).render();
             new TableView({
                 model: countryData,
-                el: this.$el.find('.table-container')
+                el: this.$el.find('.table-container'),
+                router: this.options.router
             }).render();
             new ShapeView({
                 el: this.$el.find('.country-description'),
-                model: countryData
+                model: countryData,
+                router: this.options.router
             }).render();
             return this;
         }
