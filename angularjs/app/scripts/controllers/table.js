@@ -22,10 +22,5 @@
             return "";
         };
 
-        $scope.selectCountry = function(country){
-            countryData.selectCountry(country);
-            $scope.selectedCountry = country;
-        };
-
     });
 }());

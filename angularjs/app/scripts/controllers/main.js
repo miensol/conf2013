@@ -4,10 +4,10 @@ angular.module('confApp')
   .controller('MainCtrl', function ($scope, countryData, $route, $routeParams, $location) {
         var lastRoute = $route.current;
         $scope.$on('$locationChangeSuccess', function(event) {
-            if($scope.selectedCountry){
+            if(!$route.current.$$route.redirectTo){
                 lastRoute.params.countryCode = $scope.selectedCountry.code;
+                $route.current = lastRoute;
             }
-            $route.current = lastRoute;
         });
 
         $scope.selectCountry = function(country){
