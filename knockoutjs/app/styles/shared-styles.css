@@ -1,0 +1,98 @@
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/piotr_000\/dev\/node\/conf2013\/knockoutjs\/app\/styles\/shared-styles\.scss}line{font-family:\000034}}
+.map-container {
+  height: 340px;
+  outline: 1px solid blue;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/piotr_000\/dev\/node\/conf2013\/knockoutjs\/app\/styles\/shared-styles\.scss}line{font-family:\000039}}
+.map {
+  background: #eeeeee;
+  height: 100%;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/piotr_000\/dev\/node\/conf2013\/knockoutjs\/app\/styles\/shared-styles\.scss}line{font-family:\0000314}}
+svg {
+  width: 100%;
+  height: 100%;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/piotr_000\/dev\/node\/conf2013\/knockoutjs\/app\/styles\/shared-styles\.scss}line{font-family:\0000319}}
+.table-container {
+  outline: 1px solid green;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/piotr_000\/dev\/node\/conf2013\/knockoutjs\/app\/styles\/shared-styles\.scss}line{font-family:\0000323}}
+.countries-table {
+  height: 250px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/piotr_000\/dev\/node\/conf2013\/knockoutjs\/app\/styles\/shared-styles\.scss}line{font-family:\0000326}}
+.countries-table thead {
+  display: block;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/piotr_000\/dev\/node\/conf2013\/knockoutjs\/app\/styles\/shared-styles\.scss}line{font-family:\0000330}}
+.countries-table tbody {
+  height: 210px;
+  display: block;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/piotr_000\/dev\/node\/conf2013\/knockoutjs\/app\/styles\/shared-styles\.scss}line{font-family:\0000337}}
+.countries-table .country-highlighted {
+  background-color: rgba(255, 136, 0, 0.5);
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/piotr_000\/dev\/node\/conf2013\/knockoutjs\/app\/styles\/shared-styles\.scss}line{font-family:\0000341}}
+.countries-table .country-selected {
+  background-color: rgba(255, 136, 0, 0.9);
+  font-weight: bold;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/piotr_000\/dev\/node\/conf2013\/knockoutjs\/app\/styles\/shared-styles\.scss}line{font-family:\0000346}}
+.countries-table .country {
+  -webkit-transition: background-color 0.5s ease-in-out;
+  transition: background-color 0.5s ease-in-out;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/piotr_000\/dev\/node\/conf2013\/knockoutjs\/app\/styles\/shared-styles\.scss}line{font-family:\0000351}}
+.countries-table .country-name {
+  min-width: 220px;
+}
+@media (min-width: 768px) {
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/piotr_000\/dev\/node\/conf2013\/knockoutjs\/app\/styles\/shared-styles\.scss}line{font-family:\0000356}}
+  .countries-table .country-name {
+    min-width: 320px;
+  }
+}
+@media (min-width: 992px) {
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/piotr_000\/dev\/node\/conf2013\/knockoutjs\/app\/styles\/shared-styles\.scss}line{font-family:\0000362}}
+  .countries-table .country-name {
+    min-width: 380px;
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/piotr_000\/dev\/node\/conf2013\/knockoutjs\/app\/styles\/shared-styles\.scss}line{font-family:\0000373}}
+.country-description {
+  position: relative;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/piotr_000\/dev\/node\/conf2013\/knockoutjs\/app\/styles\/shared-styles\.scss}line{font-family:\0000376}}
+.country-description .country-shape {
+  height: 200px;
+  border-radius: 10px;
+  background-color: #eeeeee;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/piotr_000\/dev\/node\/conf2013\/knockoutjs\/app\/styles\/shared-styles\.scss}line{font-family:\0000381}}
+.country-description .country-value {
+  z-index: 1;
+  border-radius: 10px;
+  background-color: rgba(91, 192, 222, 0.5);
+  color: #ffffff;
+  font-size: 30px;
+  text-align: center;
+  left: 50px;
+  right: 50px;
+  top: 115px;
+  line-height: 40px;
+  position: absolute;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/piotr_000\/dev\/node\/conf2013\/knockoutjs\/app\/styles\/shared-styles\.scss}line{font-family:\0000396}}
+.countries-container {
+  height: 500px;
+}

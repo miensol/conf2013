@@ -4,7 +4,8 @@ require.config({
   paths: {
     "bower_components": "../bower_components",
     "jquery": "../bower_components/jquery/jquery",
-    "knockout": "../bower_components/knockout/build/output/knockout-latest"
+    "knockout": "../bower_components/knockout/build/output/knockout-latest",
+    raphael: "../bower_components/raphael/raphael"
   }
 });
 
@@ -13,7 +14,9 @@ require.config({
 // require.config({}) found in this file
 require.config({
   paths: {
-    "knockout": "../bower_components/knockout/build/output/knockout-latest.debug"
+    "knockout": "../bower_components/knockout/build/output/knockout-latest.debug" ,
+    text : "../bower_components/requirejs-text/text"
+
   }
 });
 

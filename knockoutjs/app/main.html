@@ -1,0 +1,46 @@
+<div>
+    <div class="row">
+        <div class="col-md-12 map-container" ng-controller="MapController">
+            <div class="map" raphael-map="countryList" raphael-click="selectCountry"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="table-container" ng-controller="TableController">
+            <div class="col-sm-6 col-xs-6">
+                <table class="table countries-table">
+                    <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>
+                            Name
+                            <input type="text"
+                                   name="filterName" placeholder="filter"
+                                   data-bind="value: filterText, valueUpdate: 'afterkeydown'">
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody data-bind="foreach: filteredCountries">
+                    <tr class="country"
+                        data-bind="attr: {'class': classNames}, event: {mouseover: startHighlighting, mouseout:stopHighlighting}, click: selectCountry">
+                        <td data-bind="text: code"></td>
+                        <td><div class="country-name" data-bind="text: name"></div></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-6 col-xs-6 country-description-container">
+                <div class="row country-description">
+                    <p>
+                        <span>Name:</span><strong>{{selectedCountry.name}}</strong>
+                    </p>
+                    <p class="country-shape" raphael-shape="selectedCountry">
+                    </p>
+                    <div class="country-value">{{selectedCountry.valueFormatted}}</div>
+                    <p>
+                        <a ng-href="#/{{selectedCountry.code}}/more">Read more...</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

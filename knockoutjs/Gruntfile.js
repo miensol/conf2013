@@ -65,31 +65,43 @@ module.exports = function (grunt) {
                 src: ['test/**/*.js']
             },
         },
-        watch: {
+        compass: {
             options: {
-                nospawn: true
+                sassDir: 'app/styles',
+                cssDir: 'app/styles',
+                generatedImagesDir: 'app/images/generated',
+                imagesDir: 'app/images',
+                javascriptsDir: 'app/scripts',
+                fontsDir: 'app/styles/fonts',
+                importPath: 'bower_components',
+                httpImagesPath: '/images',
+                httpGeneratedImagesPath: '/images/generated',
+                httpFontsPath: '/styles/fonts',
+                relativeAssets: false,
+                dryRun: false
             },
-            gruntfile: {
-                files: '<%= jshint.gruntfile.src %>',
-                tasks: ['jshint:gruntfile']
-            },
-//            src: {
-//                files: '<%= jshint.src.src %>',
-//                tasks: ['jshint:src', 'qunit']
-//            },
-            test: {
-                files: '<%= jshint.test.src %>',
-                tasks: ['jshint:test', 'qunit']
+            dist: {},
+            server: {
+                options: {
+                    debugInfo: true
+                }
+            }
+        },
+        watch: {
+            compass: {
+                files: ['app/styles/{,*/}*.{scss,sass}'],
+                tasks: ['compass:server']
             },
             livereload: {
                 options: {
-                    livereload: LIVERELOAD_PORT
+                    livereload: LIVERELOAD_PORT,
+                    spawn: true
                 },
                 files: [
-                    'index.htm',
+                    './index.htm',
                     'app/*.html',
                     'app/*.js',
-                    'app/*.css'
+                    'app/styles/*.css'
                 ]
             }
         },
@@ -141,7 +153,7 @@ module.exports = function (grunt) {
 
     // Default task.
     grunt.registerTask('default', ['jshint', 'qunit', 'clean', 'requirejs', 'concat', 'uglify']);
-    grunt.registerTask('preview', ['connect:development', 'watch:livereload']);
+    grunt.registerTask('preview', ['connect:development', 'compass:server', 'watch']);
     grunt.registerTask('preview-live', ['default', 'connect:production']);
 
 };
