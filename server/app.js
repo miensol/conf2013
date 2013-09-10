@@ -28,32 +28,6 @@ var findCountryByCode = function (code) {
     })[0];
 };
 
-app.use(express.bodyParser());
-app.use(express.methodOverride());
-app.use(app.router);
-app.use(express.errorHandler({
-    dumpExceptions: true,
-    showStack: true
-}));
-
-['angularjs', 'backbonejs', 'knockoutjs'].forEach(function(framework) {
-    //    app.get('/' + framework, function(req,res){
-    //        res.redirect('/' + framework + '/');
-    //    });
-    if (fs.existsSync(__dirname + '/../' + framework + '/index.htm')) {
-        app.get('/' + framework, function(req, res) {
-            res.sendfile(path.resolve(__dirname + '/../' + framework + '/index.htm'));
-        });
-        app.use('/' + framework, express.static(__dirname + '/../' + framework + '/'));
-    } else {
-        app.use('/' + framework, express.static(__dirname + '/../' + framework + '/app'));
-    }
-});
-
-app.get('/world.js', function(req, res){
-    res.sendfile(__dirname + '/world.js');
-});
-
 app.get('/country/:code', function(req, res) {
     var country = findCountryByCode(req.params.code);
     var term = country.name;
@@ -85,10 +59,14 @@ app.get('/country', function(req,res){
     res.json(countries);
 });
 
-app.get('/country/:code', function(req, res){
-    var code = req.params.code;
-    var country =  findCountryByCode(code);
 
-});
+
+app.use(express.bodyParser());
+app.use(express.methodOverride());
+app.use(app.router);
+app.use(express.errorHandler({
+    dumpExceptions: true,
+    showStack: true
+}));
 
 module.exports = app;
